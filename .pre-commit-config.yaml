@@ -1,6 +1,6 @@
 repos:
-  - repo: https://github.com/shivamkh90/pre-commit
-    rev: v0.27.0-docker # Get the latest from: https://github.com/gruntwork-io/pre-commit/releases
+  - repo: https://github.com/pratishthaverma22/pre-commit
+    rev: v0.1.17-latest # Get the latest from: https://github.com/gruntwork-io/pre-commit/releases
     hooks:
       - id: terraform-fmt
       #- id: terraform-validate
@@ -8,3 +8,4 @@ repos:
       #- id: shellcheck
       - id: gofmt
       - id: golint
+
