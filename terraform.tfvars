@@ -1,0 +1,12 @@
+cluster_name="eks-cluster"
+cluster_subnet_ids=["subnet-4a57cc07"]
+cluster_role_name="eks-cluster-role"
+enabled_cluster_log_types=["audit", "api", "authenticator"]
+cluster_endpoint_private_access=false
+cluster_endpoint_public_access=true
+cluster_endpoint_public_access_cidrs=["0.0.0.0/0"]
+create_cloudwatch_log_group=true
+cloudwatch_log_group_log_retention_in_days=90
+cluster_security_group_description="EKS cluster security group"
+cluster_security_group_use_name_prefix=true
+create_cluster_security_group=true
