@@ -46,7 +46,6 @@ The project has the following folders and files:
 - `terraform destroy --var-file="terraform.tfvars"` to destroy the built infrastructure
 
 Note: We will require the following values in order to execute the code successfully: 
-- EKS Cluster Name
 - VPC Security Group IDs
 - Subnet Ids
 
