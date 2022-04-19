@@ -2,7 +2,7 @@
 
 ## EKS Cluster
 
-This Terraform code snippet is used to launch a node group.
+This Terraform code snippet is used to launch a EKS Cluster.
 
 ## Requirements
 
