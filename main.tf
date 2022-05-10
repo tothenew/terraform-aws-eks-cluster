@@ -8,7 +8,7 @@ data "aws_vpc" "default" {
 
 locals {
   cluster_sg_name           = coalesce(var.cluster_security_group_name, "${var.cluster_name}")
-  cluster_security_group_id = var.cluster_security_group_id != "" ? aws_security_group.cluster-sg[0].id : var.cluster_security_group_id
+  cluster_security_group_id = var.cluster_security_group_id != "" ? aws_security_group.this[0].id : var.cluster_security_group_id
 
   cluster_security_group_rules = {
     ingress_nodes_443 = {
@@ -38,9 +38,9 @@ locals {
   }
 }
 
-resource "aws_eks_cluster" "eks_cluster" {
+resource "aws_eks_cluster" "this" {
   name     = var.cluster_name
-  role_arn = aws_iam_role.cluster_role.arn
+  role_arn = aws_iam_role.this.arn
   version  = var.cluster_version
 
   vpc_config {
@@ -69,7 +69,7 @@ resource "aws_eks_cluster" "eks_cluster" {
   ]
 }
 
-resource "aws_iam_role" "cluster_role" {
+resource "aws_iam_role" "this" {
   name = var.cluster_role_name
 
   assume_role_policy = <<POLICY
@@ -90,16 +90,16 @@ POLICY
 
 resource "aws_iam_role_policy_attachment" "ClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.cluster_role.name
+  role       = aws_iam_role.this.name
 }
 
 
 resource "aws_iam_role_policy_attachment" "VPCResourceControllerPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
-  role       = aws_iam_role.cluster_role.name
+  role       = aws_iam_role.this.name
 }
 
-resource "aws_cloudwatch_log_group" "eks_cw_group" {
+resource "aws_cloudwatch_log_group" "this" {
   count = var.create_cloudwatch_log_group ? 1 : 0
 
   name              = "/aws/eks/${var.cluster_name}/cluster"
@@ -107,7 +107,7 @@ resource "aws_cloudwatch_log_group" "eks_cw_group" {
   kms_key_id        = var.cloudwatch_log_group_kms_id
 }
 
-resource "aws_security_group" "cluster-sg" {
+resource "aws_security_group" "this" {
   count = var.create_cluster_security_group ? 1 : 0
 
   name        = var.cluster_security_group_use_name_prefix ? null : local.cluster_sg_name
@@ -116,11 +116,11 @@ resource "aws_security_group" "cluster-sg" {
   vpc_id      = var.vpc_id
 }
 
-resource "aws_security_group_rule" "cluster-sg-rule" {
+resource "aws_security_group_rule" "this" {
   for_each = { for k, v in merge(local.cluster_security_group_rules, var.cluster_security_group_additional_rules) : k => v if var.create_cluster_security_group }
 
   # Required
-  security_group_id = aws_security_group.cluster-sg[0].id
+  security_group_id = aws_security_group.this[0].id
   protocol          = each.value.protocol
   from_port         = each.value.from_port
   to_port           = each.value.to_port
