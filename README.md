@@ -70,15 +70,15 @@ Note: We will require the following values in order to execute the code successf
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| cluster_name |  | `string` | n/a | yes |
+| cluster_name |  | `string` | n/a | no |
 | cluster_subnet_ids |  | `list(string)` | n/a | yes |
-| cluster_role_name |  | `string` | n/a | yes |
-| enabled_cluster_log_types |  | `list(string)` | n/a | yes |
-| cluster_endpoint_private_access |  | `bool` | n/a | yes |
-| cluster_endpoint_public_access |  | `bool` | n/a | yes |
-| cluster_endpoint_public_access_cidrs |  | `list(string)` | n/a | yes |
-| create_cloudwatch_log_group |  | `bool` | n/a | yes |
-| cloudwatch_log_group_log_retention_in_days |  | `number` | n/a | yes |
-| cluster_security_group_description |  | `string` | n/a | yes |
-| cluster_security_group_use_name_prefix |  | `string` | n/a | yes |
-| create_cluster_security_group |  | `bool` | n/a | yes |
+| cluster_role_name |  | `string` | n/a | no |
+| enabled_cluster_log_types |  | `list(string)` | n/a | no |
+| cluster_endpoint_private_access |  | `bool` | n/a | no |
+| cluster_endpoint_public_access |  | `bool` | n/a | no |
+| cluster_endpoint_public_access_cidrs |  | `list(string)` | n/a | no |
+| create_cloudwatch_log_group |  | `bool` | n/a | no |
+| cloudwatch_log_group_log_retention_in_days |  | `number` | n/a | no |
+| cluster_security_group_description |  | `string` | n/a | no |
+| cluster_security_group_use_name_prefix |  | `string` | n/a | no |
+| create_cluster_security_group |  | `bool` | n/a | no |
