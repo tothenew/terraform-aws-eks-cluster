@@ -1,4 +1,5 @@
 variable "cluster_name" {
+  description = "Name of the EKS cluster"
   default = "eks-cluster"
   type    = string
 }
@@ -10,11 +11,13 @@ variable "cluster_version" {
 }
 
 variable "cluster_role_name" {
+  description = "Name of the EKS cluster role"
   default = "eks-cluster-role"
   type    = string
 }
 
 variable "cluster_subnet_ids" {
+  description = "A list of subnet IDs where the EKS cluster node groups (ENIs) will be provisioned."
   default = []
   type    = list(string)
 }
@@ -80,7 +83,7 @@ variable "cluster_update_timeout" {
 }
 
 variable "create_cloudwatch_log_group" {
-  # AWS will automatically create one if logging is enabled"
+  description = "Determines whether a log group is created by this module for the cluster logs. If not, AWS will automatically create one if logging is enabled"
   type    = bool
   default = true
 }
@@ -92,6 +95,7 @@ variable "cloudwatch_log_group_log_retention_in_days" {
 }
 
 variable "cloudwatch_log_group_kms_id" {
+  description = "If a KMS Key ARN is set, this key will be used to encrypt the corresponding log group. The KMS Key must have an appropriate key policy"
   type    = string
   default = null
 }
@@ -140,6 +144,18 @@ variable "cluster_security_group_additional_rules" {
 
 variable "node_security_group_id" {
   description = "Node Security Group ID"
+  type        = string
+  default     = ""
+}
+
+variable "environment" {
+  description = "Value for default environment tag"
+  type        = string
+  default     = ""
+}
+
+variable "project" {
+  description = "Value for default project tag"
   type        = string
   default     = ""
 }

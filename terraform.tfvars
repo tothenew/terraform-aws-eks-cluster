@@ -10,3 +10,5 @@ cloudwatch_log_group_log_retention_in_days = 90
 cluster_security_group_description         = "EKS cluster security group"
 cluster_security_group_use_name_prefix     = true
 create_cluster_security_group              = true
+project                                    = "EKS Demo"
+environment                                = "POC"
