@@ -67,6 +67,8 @@ resource "aws_eks_cluster" "this" {
     aws_iam_role_policy_attachment.ClusterPolicy,
     aws_iam_role_policy_attachment.VPCResourceControllerPolicy,
   ]
+
+  
 }
 
 resource "aws_iam_role" "this" {
@@ -136,4 +138,5 @@ resource "aws_security_group_rule" "this" {
     each.value.source_security_group_id,
     try(each.value.source_node_security_group, false) ? var.node_security_group_id : null
   )
+  
 }

@@ -14,14 +14,14 @@ Before this module can be used on a project, you must ensure that the following 
 
 ### Software Dependencies
 ### Terraform
-- [Terraform](https://www.terraform.io/downloads.html) 1.0.x
+- [Terraform](https://www.terraform.io/downloads.html) 1.2.x
 
 
 
 ## Install
 
 ### Terraform
-Be sure you have the correct Terraform version (1.0.x), you can choose the binary here:
+Be sure you have the correct Terraform version (1.2.x), you can choose the binary here:
 - https://releases.hashicorp.com/terraform/
 
 ## File structure
@@ -70,15 +70,15 @@ Note: We will require the following values in order to execute the code successf
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| cluster_name |  | `string` | n/a | no |
-| cluster_subnet_ids |  | `list(string)` | n/a | yes |
-| cluster_role_name |  | `string` | n/a | no |
-| enabled_cluster_log_types |  | `list(string)` | n/a | no |
-| cluster_endpoint_private_access |  | `bool` | n/a | no |
-| cluster_endpoint_public_access |  | `bool` | n/a | no |
-| cluster_endpoint_public_access_cidrs |  | `list(string)` | n/a | no |
-| create_cloudwatch_log_group |  | `bool` | n/a | no |
-| cloudwatch_log_group_log_retention_in_days |  | `number` | n/a | no |
-| cluster_security_group_description |  | `string` | n/a | no |
-| cluster_security_group_use_name_prefix |  | `string` | n/a | no |
-| create_cluster_security_group |  | `bool` | n/a | no |
+| cluster_name |  | `string` | yes | no |
+| cluster_subnet_ids |  | `list(string)` | no | yes |
+| cluster_role_name |  | `string` | yes | no |
+| enabled_cluster_log_types |  | `list(string)` | yes | no |
+| cluster_endpoint_private_access |  | `bool` | yes | no |
+| cluster_endpoint_public_access |  | `bool` | yes | no |
+| cluster_endpoint_public_access_cidrs |  | `list(string)` | yes | no |
+| create_cloudwatch_log_group |  | `bool` | yes | no |
+| cloudwatch_log_group_log_retention_in_days |  | `number` | yes | no |
+| cluster_security_group_description |  | `string` | yes | no |
+| cluster_security_group_use_name_prefix |  | `string` | yes | no |
+| create_cluster_security_group |  | `bool` | yes | no |
