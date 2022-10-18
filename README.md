@@ -128,4 +128,3 @@ module "terraform-aws-eks-cluster" {
   cluster_endpoint_private_access = true
 }
 ```
-
