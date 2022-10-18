@@ -66,7 +66,7 @@ resource "aws_eks_cluster" "this" {
   depends_on = [
     aws_iam_role_policy_attachment.ClusterPolicy,
     aws_iam_role_policy_attachment.VPCResourceControllerPolicy,
-  ]
+  ] 
 }
 
 resource "aws_iam_role" "this" {

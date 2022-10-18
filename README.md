@@ -14,14 +14,14 @@ Before this module can be used on a project, you must ensure that the following 
 
 ### Software Dependencies
 ### Terraform
-- [Terraform](https://www.terraform.io/downloads.html) 1.0.x
+- [Terraform](https://www.terraform.io/downloads.html) 1.2.x
 
 
 
 ## Install
 
 ### Terraform
-Be sure you have the correct Terraform version (1.0.x), you can choose the binary here:
+Be sure you have the correct Terraform version (1.2.x), you can choose the binary here:
 - https://releases.hashicorp.com/terraform/
 
 ## File structure
@@ -70,15 +70,61 @@ Note: We will require the following values in order to execute the code successf
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| cluster_name |  | `string` | n/a | no |
-| cluster_subnet_ids |  | `list(string)` | n/a | yes |
-| cluster_role_name |  | `string` | n/a | no |
-| enabled_cluster_log_types |  | `list(string)` | n/a | no |
-| cluster_endpoint_private_access |  | `bool` | n/a | no |
-| cluster_endpoint_public_access |  | `bool` | n/a | no |
-| cluster_endpoint_public_access_cidrs |  | `list(string)` | n/a | no |
-| create_cloudwatch_log_group |  | `bool` | n/a | no |
-| cloudwatch_log_group_log_retention_in_days |  | `number` | n/a | no |
-| cluster_security_group_description |  | `string` | n/a | no |
-| cluster_security_group_use_name_prefix |  | `string` | n/a | no |
-| create_cluster_security_group |  | `bool` | n/a | no |
+| cluster_name |  | `string` | yes | no |
+| cluster_subnet_ids |  | `list(string)` | no | yes |
+| cluster_role_name |  | `string` | yes | no |
+| enabled_cluster_log_types |  | `list(string)` | yes | no |
+| cluster_endpoint_private_access |  | `bool` | yes | no |
+| cluster_endpoint_public_access |  | `bool` | yes | no |
+| cluster_endpoint_public_access_cidrs |  | `list(string)` | yes | no |
+| create_cloudwatch_log_group |  | `bool` | yes | no |
+| cloudwatch_log_group_log_retention_in_days |  | `number` | yes | no |
+| cluster_security_group_description |  | `string` | yes | no |
+| cluster_security_group_use_name_prefix |  | `string` | yes | no |
+| create_cluster_security_group |  | `bool` | yes | no |
+
+## Terraform Module usage for creating eks cluster
+
+### eks-cluster-module-with-custom-inputs
+
+```
+module "terraform-aws-eks-cluster" {
+  source  = "../terraform-aws-eks-cluster"
+  cluster_name = "eks-cluster"
+  cluster_version = "1.23"
+  cluster_role_name = "eks-cluster-role"
+  cluster_subnet_ids = ["subnet-a", "subnet-b", "subnetc"]
+  cluster_endpoint_private_access = false  
+  cluster_endpoint_public_access = true
+  cluster_endpoint_public_access_cidrs = ["0.0.0.0/0"]
+  vpc_id = "vpc-1234556abcdef"
+  cluster_service_ipv4_cidr = "172.20.0.0/16"
+  ip_family = "ipv4"
+  create_cloudwatch_log_group = true
+  cloudwatch_log_group_log_retention_in_days = 90
+  create_cluster_security_group = true
+  cluster_additional_security_group_ids = []
+  cluster_security_group_description = "EKS cluster security group"
+  cluster_security_group_name = "eks-cluster-sg"
+  cluster_security_group_use_name_prefix = true
+  environment = "dev"
+  project = "eks-dev"
+} 
+```
+
+### eks-cluster-with-minimum-inputs
+```
+module "terraform-aws-eks-cluster" {
+  source  = "../terraform-aws-eks-cluster"
+  cluster_subnet_ids = ["subnet-4a57cc07"]
+} 
+```
+
+### eks-cluster-with-private-access
+```
+module "terraform-aws-eks-cluster" {
+  source  = "../terraform-aws-eks-cluster"
+  cluster_subnet_ids = ["subnet-4a57cc07"]
+  cluster_endpoint_private_access = true
+}
+```
