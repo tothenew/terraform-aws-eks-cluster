@@ -2,14 +2,10 @@ data "aws_vpc" "default" {
   default = true
 }
 
-# data "aws_subnet_ids" "default" {
-#   vpc_id = aws_vpc.default.id
-# }
-
 locals {
   cluster_sg_name           = coalesce(var.cluster_security_group_name, "${var.cluster_name}")
-  cluster_security_group_id = var.cluster_security_group_id != "" ? aws_security_group.this[0].id : var.cluster_security_group_id
-
+  cluster_security_group_id = var.cluster_security_group_id == "" ? aws_security_group.this[0].id : var.cluster_security_group_id
+    cluster_role_arn = var.create_eks_iam_role == true ? aws_iam_role.this[0].arn : var.cluster_role_arn
   cluster_security_group_rules = {
     ingress_nodes_443 = {
       description                = "Node groups to cluster API"
@@ -40,7 +36,7 @@ locals {
 
 resource "aws_eks_cluster" "this" {
   name     = var.cluster_name
-  role_arn = aws_iam_role.this.arn
+  role_arn = local.cluster_role_arn
   version  = var.cluster_version
 
   vpc_config {
@@ -67,9 +63,11 @@ resource "aws_eks_cluster" "this" {
     aws_iam_role_policy_attachment.ClusterPolicy,
     aws_iam_role_policy_attachment.VPCResourceControllerPolicy,
   ]
+    tags = var.tags
 }
 
 resource "aws_iam_role" "this" {
+    count = var.create_eks_iam_role ? 1 : 0
   name = var.cluster_role_name
 
   assume_role_policy = <<POLICY
@@ -89,14 +87,16 @@ POLICY
 }
 
 resource "aws_iam_role_policy_attachment" "ClusterPolicy" {
+    count = var.create_eks_iam_role ? 1 : 0
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.this.name
+  role       = aws_iam_role.this[0].name
 }
 
 
 resource "aws_iam_role_policy_attachment" "VPCResourceControllerPolicy" {
+    count = var.create_eks_iam_role ? 1 : 0
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
-  role       = aws_iam_role.this.name
+  role       = aws_iam_role.this[0].name
 }
 
 resource "aws_cloudwatch_log_group" "this" {
@@ -127,7 +127,7 @@ resource "aws_security_group_rule" "this" {
   type              = each.value.type
 
   # Optional
-  description      = try(each.value.description, null)
+#  description      = try(each.value.description, null)
   cidr_blocks      = try(each.value.cidr_blocks, null)
   ipv6_cidr_blocks = try(each.value.ipv6_cidr_blocks, null)
   prefix_list_ids  = try(each.value.prefix_list_ids, [])
