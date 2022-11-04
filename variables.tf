@@ -103,7 +103,6 @@ variable "cloudwatch_log_group_kms_id" {
 variable "create_cluster_security_group" {
   description = "Set True if security group needs to be created for the cluster or use the existing `cluster_security_group_id`"
   type        = bool
-  default     = true
 }
 
 variable "cluster_security_group_id" {
@@ -158,4 +157,21 @@ variable "project" {
   description = "Value for default project tag"
   type        = string
   default     = ""
+}
+
+variable "create_eks_iam_role" {
+    description = "Determines whether iam role is created by this module for the cluster. If not, AWS will automatically create one if logging is enabled"
+    type    = bool
+    default = false
+}
+
+variable "cluster_role_arn" {
+    description = "Determines whether iam role arn is created by this module for the cluster. If not, AWS will automatically create one if logging is enabled"
+    type    = string
+    default = ""
+}
+
+variable "tags" {
+    description = "Tags"
+    type        = map(string)
 }
