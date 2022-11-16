@@ -1,7 +1,7 @@
 variable "cluster_name" {
   description = "Name of the EKS cluster"
-  default = "eks-cluster"
-  type    = string
+  default     = "eks-cluster"
+  type        = string
 }
 
 variable "cluster_version" {
@@ -12,14 +12,14 @@ variable "cluster_version" {
 
 variable "cluster_role_name" {
   description = "Name of the EKS cluster role"
-  default = "eks-cluster-role"
-  type    = string
+  default     = "eks-cluster-role"
+  type        = string
 }
 
 variable "cluster_subnet_ids" {
   description = "A list of subnet IDs where the EKS cluster node groups (ENIs) will be provisioned."
-  default = []
-  type    = list(string)
+  default     = []
+  type        = list(string)
 }
 
 variable "enabled_cluster_log_types" {
@@ -84,8 +84,8 @@ variable "cluster_update_timeout" {
 
 variable "create_cloudwatch_log_group" {
   description = "Determines whether a log group is created by this module for the cluster logs. If not, AWS will automatically create one if logging is enabled"
-  type    = bool
-  default = true
+  type        = bool
+  default     = true
 }
 
 variable "cloudwatch_log_group_log_retention_in_days" {
@@ -96,8 +96,8 @@ variable "cloudwatch_log_group_log_retention_in_days" {
 
 variable "cloudwatch_log_group_kms_id" {
   description = "If a KMS Key ARN is set, this key will be used to encrypt the corresponding log group. The KMS Key must have an appropriate key policy"
-  type    = string
-  default = null
+  type        = string
+  default     = null
 }
 
 variable "create_cluster_security_group" {
@@ -160,18 +160,18 @@ variable "project" {
 }
 
 variable "create_eks_iam_role" {
-    description = "Determines whether iam role is created by this module for the cluster. If not, AWS will automatically create one if logging is enabled"
-    type    = bool
-    default = false
+  description = "Determines whether iam role is created by this module for the cluster. If not, AWS will automatically create one if logging is enabled"
+  type        = bool
+  default     = false
 }
 
 variable "cluster_role_arn" {
-    description = "Determines whether iam role arn is created by this module for the cluster. If not, AWS will automatically create one if logging is enabled"
-    type    = string
-    default = ""
+  description = "Determines whether iam role arn is created by this module for the cluster. If not, AWS will automatically create one if logging is enabled"
+  type        = string
+  default     = ""
 }
 
 variable "tags" {
-    description = "Tags"
-    type        = map(string)
+  description = "Tags"
+  type        = map(string)
 }
